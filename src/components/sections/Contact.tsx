@@ -326,11 +326,11 @@ export default function Contact() {
                       data-cursor-hover
                     >
                       <option value="">Select a project type</option>
-                      <option value="New Website">New Website</option>
-                      <option value="Website Redesign">Website Redesign</option>
-                      <option value="E-Commerce Store">E-Commerce Store</option>
-                      <option value="Landing Page">Landing Page</option>
-                      <option value="Other">Other</option>
+                      <option value="Cleaning Service Website">Cleaning Service Website</option>
+                      <option value="Event/Program Platform">Event/Program Platform</option>
+                      <option value="Booking System">Booking System</option>
+                      <option value="Custom Website">Custom Website</option>
+                      <option value="Support & Maintenance">Support & Maintenance</option>
                     </select>
                   </div>
                   

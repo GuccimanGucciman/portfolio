@@ -175,7 +175,6 @@ export function HorizontalScroll({
   children,
   id,
   width = "300vw",
-  backgroundColor = "transparent" // Changed to transparent
 }: HorizontalScrollProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const horizontalRef = useRef<HTMLDivElement>(null);

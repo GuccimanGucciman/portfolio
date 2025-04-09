@@ -16,11 +16,11 @@ export default function Hero() {
   // Text animation state
   const [currentTextIndex, setCurrentTextIndex] = useState(0);
   const [textVisible, setTextVisible] = useState(true);
-  const businessValues = [
-    "Increase Your Online Sales", 
-    "Generate More Quality Leads", 
-    "Build Customer Trust", 
-    "Stand Out From Competitors"
+  const businessSolutions = [
+    "Grow Your Online Presence", 
+    "Convert Visitors Into Customers", 
+    "Elevate Your Brand Experience",
+    "Streamline Your Business Operations"
   ];
   
   // Smooth spring animation for mouse parallax
@@ -72,14 +72,14 @@ export default function Hero() {
       setTextVisible(false);
       
       setTimeout(() => {
-        setCurrentTextIndex((prevIndex) => (prevIndex + 1) % businessValues.length);
+        setCurrentTextIndex((prevIndex) => (prevIndex + 1) % businessSolutions.length);
         setTextVisible(true);
       }, 500); // Time between fade out and fade in
       
     }, 3000); // Total time each value is displayed
     
     return () => clearInterval(interval);
-  }, [businessValues.length]);
+  }, [businessSolutions.length]);
   
   return (
     <section 
@@ -135,8 +135,8 @@ export default function Hero() {
                 y: mouseParallax.y * 0.3,
               }}
             >
-              Websites That <br />
-              <span className="text-gradient">Drive Growth</span> For Your Business
+              Custom Websites <br />
+              That <span className="text-gradient">Drive</span> Results
             </motion.h1>
             
             <motion.div 
@@ -156,7 +156,7 @@ export default function Hero() {
                     transition={{ duration: 0.5 }}
                     className="font-semibold"
                   >
-                    {businessValues[currentTextIndex]}
+                    {businessSolutions[currentTextIndex]}
                   </motion.p>
                 )}
               </AnimatePresence>
@@ -169,14 +169,13 @@ export default function Hero() {
                 y: mouseParallax.y * 0.7,
               }}
             >
-              We design and develop custom websites that transform visitors into customers. 
-              Our data-driven approach ensures your site isn&apos;t just beautiful—it&apos;s a powerful 
-              business tool that delivers measurable results.
+              We build beautiful, responsive websites with modern technologies that help your business stand out. 
+              More than just a pretty design, our sites are strategically crafted to convert visitors into loyal customers.
             </motion.p>
             
             {/* CTA buttons */}
             <motion.div 
-              className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mt-8"
+              className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mt-12"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.5 }}
@@ -185,14 +184,14 @@ export default function Hero() {
                 y: mouseParallax.y * 0.9,
               }}
             >
-              <Link href="#portfolio" passHref>
+              <Link href="#services" passHref>
                 <motion.span
                   className="btn-primary px-8 py-3"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.98 }}
                   data-cursor-hover
                 >
-                  See Our Work
+                  Explore Services
                 </motion.span>
               </Link>
               
@@ -215,23 +214,23 @@ export default function Hero() {
               animate={{ opacity: 1 }}
               transition={{ duration: 1, delay: 1 }}
             >
-              <p className="text-sm text-[rgb(var(--text-secondary))] mb-3">Trusted by businesses across industries</p>
+              <p className="text-sm text-[rgb(var(--text-secondary))] mb-3">Why choose our web development services:</p>
               <div className="flex flex-wrap justify-center lg:justify-start gap-6 md:gap-10">
                 <div className="flex flex-col items-center">
-                  <span className="text-xl font-bold text-[rgb(var(--color-primary))]">200+</span>
-                  <span className="text-xs text-[rgb(var(--text-secondary))]">Happy Clients</span>
+                  <span className="text-xl font-bold text-[rgb(var(--color-primary))]">100%</span>
+                  <span className="text-xs text-[rgb(var(--text-secondary))]">Responsive Design</span>
                 </div>
                 <div className="flex flex-col items-center">
-                  <span className="text-xl font-bold text-[rgb(var(--color-primary))]">350+</span>
-                  <span className="text-xs text-[rgb(var(--text-secondary))]">Websites Delivered</span>
+                  <span className="text-xl font-bold text-[rgb(var(--color-primary))]">SEO</span>
+                  <span className="text-xs text-[rgb(var(--text-secondary))]">Optimized</span>
                 </div>
                 <div className="flex flex-col items-center">
-                  <span className="text-xl font-bold text-[rgb(var(--color-primary))]">15+</span>
-                  <span className="text-xs text-[rgb(var(--text-secondary))]">Years Experience</span>
+                  <span className="text-xl font-bold text-[rgb(var(--color-primary))]">Fast</span>
+                  <span className="text-xs text-[rgb(var(--text-secondary))]">Loading Speed</span>
                 </div>
                 <div className="flex flex-col items-center">
-                  <span className="text-xl font-bold text-[rgb(var(--color-primary))]">98%</span>
-                  <span className="text-xs text-[rgb(var(--text-secondary))]">Client Satisfaction</span>
+                  <span className="text-xl font-bold text-[rgb(var(--color-primary))]">24/7</span>
+                  <span className="text-xs text-[rgb(var(--text-secondary))]">Support</span>
                 </div>
               </div>
             </motion.div>
@@ -259,7 +258,7 @@ export default function Hero() {
                 <div className="relative h-full w-full bg-white">
                   <Image 
                     src="/window.svg" 
-                    alt="Website mockup example" 
+                    alt="Website design mockup" 
                     fill 
                     style={{ objectFit: 'cover' }}
                     className="rounded-2xl"
@@ -333,7 +332,7 @@ export default function Hero() {
                             </div>
                           </div>
                           
-                          {/* Portfolio section mockup */}
+                          {/* Services section mockup */}
                           <div className="h-48 mb-6 rounded-lg bg-white shadow-sm p-4">
                             <div className="h-4 bg-gray-200 rounded w-1/4 mb-4"></div>
                             <div className="grid grid-cols-3 gap-3 h-32">
@@ -343,7 +342,7 @@ export default function Hero() {
                             </div>
                           </div>
                           
-                          {/* Testimonial section mockup */}
+                          {/* Feature showcase mockup */}
                           <div className="h-32 mb-6 rounded-lg bg-white shadow-sm p-4">
                             <div className="flex items-start">
                               <div className="w-10 h-10 rounded-full bg-[rgb(var(--color-secondary))]/20 flex-shrink-0"></div>

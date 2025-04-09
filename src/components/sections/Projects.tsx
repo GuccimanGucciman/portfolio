@@ -5,90 +5,53 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { HorizontalScroll, RevealContent } from '../ui/AppleScrollEffect';
 
-// Define a proper interface for the Portfolio item type
-interface PortfolioItem {
+// Define a proper interface for the Feature item type
+interface FeatureItem {
   id: number;
   title: string;
-  clientName: string;
+  category: string;
   description: string;
-  businessCategory: string;
-  results: string[];
+  benefits: string[];
   image: string;
-  websiteUrl: string;
-  featured: boolean;
+  demoUrl: string;
+  primaryFeature: boolean;
 }
 
-// Portfolio data for business clients
-const portfolioItems: PortfolioItem[] = [
+// Website features data
+const websiteFeatures: FeatureItem[] = [
   {
     id: 1,
-    title: 'Modern E-commerce Platform',
-    clientName: 'FashionBloom',
-    description: 'A full-featured online store that increased sales by 175% in the first quarter after launch, with mobile-optimized checkout and personalized product recommendations.',
-    businessCategory: 'Retail & Fashion',
-    results: ['175% sales increase', '32% lower bounce rate', '42% higher mobile conversions'],
+    title: 'Responsive Design & Mobile Optimization',
+    category: 'Design & Usability',
+    description: 'Websites that adapt perfectly to any screen size, ensuring your visitors have an exceptional experience whether they\'re on desktop, tablet, or mobile devices.',
+    benefits: ['Improved user experience', 'Higher engagement rates', 'Better search engine rankings'],
     image: '/window.svg',
-    websiteUrl: '#',
-    featured: true,
+    demoUrl: '#responsive-demo',
+    primaryFeature: true,
   },
   {
     id: 2,
-    title: 'Professional Services Website',
-    clientName: 'Lawford & Partners',
-    description: 'A sophisticated website for a law firm focused on client acquisition, featuring an appointment booking system that increased client consultations by 65%.',
-    businessCategory: 'Legal Services',
-    results: ['65% more consultations', '48% increase in organic traffic', '3.2x ROI on website investment'],
+    title: 'Interactive Elements & Animations',
+    category: 'User Experience',
+    description: 'Thoughtful animations and interactive elements that guide users through your content, highlight important information, and create memorable experiences that keep visitors engaged.',
+    benefits: ['Increased time on site', 'Improved user engagement', 'Enhanced brand perception'],
     image: '/globe.svg',
-    websiteUrl: '#',
-    featured: true,
+    demoUrl: '#interaction-demo',
+    primaryFeature: true,
   },
   {
     id: 3,
-    title: 'Restaurant Online Ordering',
-    clientName: 'Bistro Gourmet',
-    description: 'An intuitive online ordering system and website redesign that helped this restaurant thrive during challenging times, increasing their takeout orders by 220%.',
-    businessCategory: 'Restaurant & Food Service',
-    results: ['220% increase in online orders', '42% higher average order value', '4.9/5 customer satisfaction'],
-    image: '/file.svg',
-    websiteUrl: '#',
-    featured: true,
-  },
-  {
-    id: 4,
-    title: 'Real Estate Property Showcase',
-    clientName: 'Prime Properties',
-    description: 'A premium real estate website with virtual tours, detailed property filtering, and lead capture forms that doubled monthly qualified leads.',
-    businessCategory: 'Real Estate',
-    results: ['2x qualified lead generation', '68% longer site visit duration', '45% more property inquiries'],
+    title: 'Advanced Contact & Booking Forms',
+    category: 'Conversion',
+    description: 'Intelligent forms that are easy to complete, reduce friction, and capture the information you need while connecting directly to your email or CRM system.',
+    benefits: ['Higher conversion rates', 'Streamlined customer acquisition', 'Automated lead collection'],
     image: '/window.svg',
-    websiteUrl: '#',
-    featured: false,
-  },
-  {
-    id: 5,
-    title: 'Medical Practice Website',
-    clientName: 'Wellness Medical Center',
-    description: 'A patient-centered medical practice website with online appointment scheduling that improved patient acquisition and reduced administrative work.',
-    businessCategory: 'Healthcare',
-    results: ['78% of appointments now booked online', '52% reduction in phone calls', '4.8/5 patient satisfaction rating'],
-    image: '/globe.svg',
-    websiteUrl: '#',
-    featured: false,
-  },
-  {
-    id: 6,
-    title: 'Fitness Studio Membership Site',
-    clientName: 'Elite Fitness',
-    description: 'A membership website with class scheduling, progress tracking, and online payments that streamlined operations and increased member retention.',
-    businessCategory: 'Health & Fitness',
-    results: ['36% increase in membership retention', '58% boost in class bookings', '27% revenue growth'],
-    image: '/file.svg',
-    websiteUrl: '#',
-    featured: false,
+    demoUrl: '#forms-demo',
+    primaryFeature: false,
   },
 ];
 
-export default function Portfolio() {
+export default function Features() {
   const sectionRef = useRef<HTMLDivElement>(null);
   
   return (
@@ -97,97 +60,88 @@ export default function Portfolio() {
       <div className="py-20 flex flex-col justify-center items-center text-center bg-white">
         <RevealContent>
           <h2 className="text-5xl md:text-6xl font-bold mb-4 tracking-tight text-[rgb(var(--text-primary))]">
-            Our <span className="text-gradient">Portfolio</span>
+            Website <span className="text-gradient">Features</span>
           </h2>
         </RevealContent>
         <RevealContent delay={0.1}>
           <p className="text-xl text-[rgb(var(--text-secondary))] max-w-lg mx-auto">
-            See how we&apos;ve helped businesses like yours achieve impressive results.
+            Discover the powerful capabilities we can build into your custom website
           </p>
         </RevealContent>
       </div>
       
       {/* GSAP-powered Horizontal Scroll section */}
       <HorizontalScroll width="280vw" id="portfolio-scroll">
-        {portfolioItems.map((item) => (
-          <PortfolioCard 
-            key={item.id}
-            item={item}
+        {websiteFeatures.map((feature) => (
+          <FeatureCard 
+            key={feature.id}
+            feature={feature}
           />
         ))}
       </HorizontalScroll>
       
-      {/* Testimonial showcase */}
+      {/* Feature showcase */}
       <div className="py-20 bg-white">
         <div className="container-fluid max-w-5xl mx-auto">
           <div className="text-center mb-12">
-            <h3 className="text-3xl font-bold mb-4 text-[rgb(var(--text-primary))]">What Our Clients Say</h3>
+            <h3 className="text-3xl font-bold mb-4 text-[rgb(var(--text-primary))]">Why These Features Matter</h3>
             <p className="text-[rgb(var(--text-secondary))] max-w-lg mx-auto">
-              Don&apos;t just take our word for it. Here&apos;s what our clients have to say about working with us.
+              The right features don&apos;t just make your website look good—they drive real business results.
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <motion.div 
-              className="testimonial-card"
+              className="feature-card p-6 bg-white rounded-xl shadow-sm border border-gray-100"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.5 }}
             >
-              <div className="flex items-center mb-4">
-                <div className="w-12 h-12 rounded-full bg-[rgb(var(--color-primary))]/10 flex items-center justify-center text-[rgb(var(--color-primary))]">
-                  FP
-                </div>
-                <div className="ml-4">
-                  <p className="font-medium text-[rgb(var(--text-primary))]">Emma Johnson</p>
-                  <p className="text-sm text-[rgb(var(--text-secondary))]">FashionBloom</p>
-                </div>
+              <div className="w-12 h-12 rounded-full bg-[rgb(var(--color-primary))]/10 flex items-center justify-center text-[rgb(var(--color-primary))] mb-4">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v15.75c0 .621-.504 1.125-1.125-1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" />
+                </svg>
               </div>
-              <p className="text-[rgb(var(--text-secondary))] italic">
-                &quot;Our online sales have completely transformed since launching our new website. The team understood exactly what we needed and delivered beyond our expectations.&quot;
+              <h4 className="text-xl font-bold mb-2 text-[rgb(var(--text-primary))]">Increased Conversions</h4>
+              <p className="text-[rgb(var(--text-secondary))]">
+                Strategic design elements and intuitive user flows guide visitors toward taking action, whether that&apos;s making a purchase, filling out a form, or booking an appointment.
               </p>
             </motion.div>
             
             <motion.div 
-              className="testimonial-card"
+              className="feature-card p-6 bg-white rounded-xl shadow-sm border border-gray-100"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
-              <div className="flex items-center mb-4">
-                <div className="w-12 h-12 rounded-full bg-[rgb(var(--color-primary))]/10 flex items-center justify-center text-[rgb(var(--color-primary))]">
-                  LP
-                </div>
-                <div className="ml-4">
-                  <p className="font-medium text-[rgb(var(--text-primary))]">Robert Lawford</p>
-                  <p className="text-sm text-[rgb(var(--text-secondary))]">Lawford & Partners</p>
-                </div>
+              <div className="w-12 h-12 rounded-full bg-[rgb(var(--color-primary))]/10 flex items-center justify-center text-[rgb(var(--color-primary))] mb-4">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456z" />
+                </svg>
               </div>
-              <p className="text-[rgb(var(--text-secondary))] italic">
-                &quot;The appointment booking system has completely changed how we acquire new clients. Our firm now operates more efficiently while providing better service.&quot;
+              <h4 className="text-xl font-bold mb-2 text-[rgb(var(--text-primary))]">Modern User Experience</h4>
+              <p className="text-[rgb(var(--text-secondary))]">
+                Polished interactions and intuitive navigation create a premium feel that builds trust with your visitors and sets you apart from competitors with outdated websites.
               </p>
             </motion.div>
             
             <motion.div 
-              className="testimonial-card"
+              className="feature-card p-6 bg-white rounded-xl shadow-sm border border-gray-100"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.5, delay: 0.4 }}
             >
-              <div className="flex items-center mb-4">
-                <div className="w-12 h-12 rounded-full bg-[rgb(var(--color-primary))]/10 flex items-center justify-center text-[rgb(var(--color-primary))]">
-                  BG
-                </div>
-                <div className="ml-4">
-                  <p className="font-medium text-[rgb(var(--text-primary))]">Michael Chen</p>
-                  <p className="text-sm text-[rgb(var(--text-secondary))]">Bistro Gourmet</p>
-                </div>
+              <div className="w-12 h-12 rounded-full bg-[rgb(var(--color-primary))]/10 flex items-center justify-center text-[rgb(var(--color-primary))] mb-4">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
+                </svg>
               </div>
-              <p className="text-[rgb(var(--text-secondary))] italic">
-                &quot;Our new website and ordering system were lifesavers during tough times. The streamlined ordering process delighted our customers and boosted our revenue.&quot;
+              <h4 className="text-xl font-bold mb-2 text-[rgb(var(--text-primary))]">Performance Optimized</h4>
+              <p className="text-[rgb(var(--text-secondary))]">
+                Fast-loading websites keep visitors engaged, reduce bounce rates, and rank higher in search results, giving you an edge in today&apos;s competitive online landscape.
               </p>
             </motion.div>
           </div>
@@ -196,14 +150,14 @@ export default function Portfolio() {
       
       {/* CTA button */}
       <div className="flex justify-center py-16 bg-gray-50 border-t border-gray-100">
-        <Link href="/portfolio" className="pointer-events-auto">
+        <Link href="#contact" className="pointer-events-auto">
           <motion.div 
             className="px-8 py-3 rounded-full bg-gradient-to-r from-[rgb(var(--color-primary))] to-[rgb(var(--color-secondary))] text-white shadow-lg font-medium"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             data-cursor-hover
           >
-            View All Case Studies
+            Discuss Your Website Needs
           </motion.div>
         </Link>
       </div>
@@ -211,17 +165,17 @@ export default function Portfolio() {
   );
 }
 
-// Portfolio card styled for horizontal scroll presentation
-function PortfolioCard({ item }: { item: PortfolioItem }) {
+// Feature card styled for horizontal scroll presentation
+function FeatureCard({ feature }: { feature: FeatureItem }) {
   return (
     <div className="min-w-[85vw] h-screen flex items-center justify-center px-4">
       <div className="w-full max-w-5xl mx-auto bg-white rounded-2xl p-8 border border-gray-100 shadow-xl">
         <div className="flex flex-col lg:flex-row items-center gap-8">
-          {/* Project image */}
+          {/* Feature image */}
           <div className="w-full lg:w-1/2 aspect-video relative rounded-lg overflow-hidden shadow-md">
             <Image
-              src={item.image}
-              alt={item.title}
+              src={feature.image}
+              alt={feature.title}
               fill
               sizes="(max-width: 768px) 100vw, 50vw"
               style={{ objectFit: 'cover' }}
@@ -231,46 +185,42 @@ function PortfolioCard({ item }: { item: PortfolioItem }) {
             {/* Light gradient overlay */}
             <div className="absolute inset-0 bg-gradient-to-t from-[rgb(var(--color-primary))]/20 to-transparent" />
             
-            {/* Featured badge */}
-            {item.featured && (
+            {/* Primary feature badge */}
+            {feature.primaryFeature && (
               <div className="absolute top-4 left-4 bg-white px-3 py-1 text-xs font-bold text-[rgb(var(--color-primary))] rounded-full shadow-md">
-                Featured Project
+                Premium Feature
               </div>
             )}
             
-            {/* Business category badge */}
+            {/* Category badge */}
             <div className="absolute top-4 right-4 bg-white/90 px-3 py-1 text-xs font-medium text-[rgb(var(--text-secondary))] rounded-full shadow-sm">
-              {item.businessCategory}
+              {feature.category}
             </div>
           </div>
           
-          {/* Project details */}
+          {/* Feature details */}
           <div className="w-full lg:w-1/2 space-y-4">
-            <div className="text-sm font-medium text-[rgb(var(--color-primary))]">
-              {item.clientName}
-            </div>
-            
             <h3 className="text-2xl font-bold tracking-tight text-[rgb(var(--text-primary))]">
-              {item.title}
+              {feature.title}
             </h3>
             
             <p className="text-[rgb(var(--text-secondary))] text-lg">
-              {item.description}
+              {feature.description}
             </p>
             
-            {/* Results display */}
+            {/* Benefits display */}
             <div className="mt-6 pt-6 border-t border-gray-100">
               <h4 className="text-sm font-medium text-[rgb(var(--text-primary))] mb-3">
-                Business Results
+                Business Benefits
               </h4>
               
               <div className="flex flex-wrap gap-3">
-                {item.results.map((result, index) => (
+                {feature.benefits.map((benefit, index) => (
                   <div 
                     key={index}
                     className="bg-[rgb(var(--color-primary))]/5 text-[rgb(var(--color-primary))] text-sm font-medium px-3 py-1.5 rounded-lg"
                   >
-                    {result}
+                    {benefit}
                   </div>
                 ))}
               </div>
@@ -279,11 +229,11 @@ function PortfolioCard({ item }: { item: PortfolioItem }) {
             {/* Action button */}
             <div className="pt-6">
               <Link 
-                href={item.websiteUrl} 
+                href={feature.demoUrl} 
                 className="px-5 py-2 flex items-center justify-center gap-2 bg-[rgb(var(--text-primary))] text-white font-medium rounded-lg hover:bg-[rgb(var(--text-primary))]/90 transition-colors"
                 data-cursor-hover
               >
-                <span>View Website</span>
+                <span>See Demo</span>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
                 </svg>

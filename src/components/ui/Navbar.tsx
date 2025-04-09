@@ -14,9 +14,8 @@ interface NavItem {
 const navItems: NavItem[] = [
   { name: 'Home', path: '#home' },
   { name: 'Services', path: '#services' },
-  { name: 'Portfolio', path: '#portfolio' },
-  { name: 'Process', path: '#process' },
-  { name: 'Testimonials', path: '#testimonials' },
+  { name: 'Features', path: '#portfolio' }, // Renamed from Portfolio to Features
+  { name: 'Our Process', path: '#process' },
   { name: 'Contact', path: '#contact' },
 ];
 
