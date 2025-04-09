@@ -1,26 +1,383 @@
 @import "tailwindcss";
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Modern design system with CSS custom properties */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Core palette - Business-friendly colors */
+  --color-primary: 41, 128, 185; /* Professional blue */
+  --color-secondary: 26, 188, 156; /* Fresh teal */
+  --color-accent: 231, 76, 60; /* Accent red for CTA elements */
+  --color-dark: 44, 62, 80; /* Softer dark blue */
+  --color-light: 255, 255, 255; /* Pure white */
+  
+  /* Functional variables */
+  --background: var(--color-light);
+  --foreground: var(--color-dark);
+  --text-primary: 44, 62, 80; /* Dark blue-gray text */
+  --text-secondary: 52, 73, 94; /* Secondary text color */
+  --transition-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-decelerate: cubic-bezier(0, 0, 0.2, 1);
+  --transition-accelerate: cubic-bezier(0.4, 0, 1, 1);
+  
+  /* Apple-style transitions */
+  --apple-ease: cubic-bezier(0.25, 0.1, 0.25, 1);
+  --apple-ease-in-out: cubic-bezier(0.42, 0, 0.58, 1);
+  
+  /* Z-index layers */
+  --z-background: -10;
+  --z-base: 1;
+  --z-overlay: 10;
+  --z-modal: 100;
+  --z-max: 999;
+  
+  /* Blur and backdrop values */
+  --blur-subtle: blur(8px);
+  --blur-medium: blur(16px);
+  --blur-heavy: blur(24px);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: light) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: var(--color-light);
+    --foreground: var(--color-dark);
   }
 }
 
+/* Global styles */
+html {
+  scroll-behavior: smooth;
+  font-feature-settings: "cv02", "cv03", "cv04", "salt", "calt";
+  text-rendering: optimizeLegibility;
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: rgb(var(--background));
+  color: rgb(var(--foreground));
+  overflow-x: hidden;
+  @apply antialiased;
+  letter-spacing: -0.015em;
+  line-height: 1.6;
+}
+
+/* Hide scrollbar, but keep functionality */
+body {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
+/* Enhanced typography with better readability */
+.text-balance {
+  text-wrap: balance;
+}
+
+/* Improved heading visibility */
+h1, h2, h3, h4, h5, h6 {
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+  font-weight: 700;
+  margin-bottom: 0.5em;
+  @apply text-[rgb(var(--text-primary))];
+}
+
+/* Regular text gets better contrast */
+p {
+  margin-bottom: 1em;
+  max-width: 70ch; /* Limit line length for readability */
+  @apply text-[rgb(var(--text-secondary))];
+}
+
+/* Ensure proper spacing between elements */
+* + h1, * + h2, * + h3, * + h4 {
+  margin-top: 1.5em;
+}
+
+/* Glass morphism effects - Lighter version */
+.glass-panel {
+  @apply backdrop-blur-md bg-white/80 border border-white/50 shadow-md;
+}
+
+.dark .glass-panel {
+  @apply bg-black/40 border-white/15;
+}
+
+/* Enhanced gradient text with better visibility */
+.text-gradient {
+  @apply bg-clip-text text-transparent font-bold;
+  background-image: linear-gradient(
+    135deg,
+    rgba(var(--color-primary), 1) 0%,
+    rgba(var(--color-secondary), 1) 100%
+  );
+}
+
+.text-gradient-animated {
+  @apply bg-clip-text text-transparent font-bold;
+  background-size: 200% 200%;
+  background-image: linear-gradient(
+    -45deg,
+    rgba(var(--color-primary), 1) 0%,
+    rgba(var(--color-secondary), 1) 25%,
+    rgba(var(--color-accent), 0.8) 50%,
+    rgba(var(--color-secondary), 1) 75%,
+    rgba(var(--color-primary), 1) 100%
+  );
+  animation: gradient-animation 8s ease infinite;
+}
+
+/* Animation keyframes */
+@keyframes gradient-animation {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+@keyframes pulse-slow {
+  0% { opacity: 0.4; }
+  50% { opacity: 0.8; }
+  100% { opacity: 0.4; }
+}
+
+@keyframes orbitSlow {
+  from { transform: rotate(0deg) translateX(10px) rotate(0deg); }
+  to { transform: rotate(360deg) translateX(10px) rotate(-360deg); }
+}
+
+@keyframes orbitMedium {
+  from { transform: rotate(0deg) translateX(20px) rotate(0deg); }
+  to { transform: rotate(360deg) translateX(20px) rotate(-360deg); }
+}
+
+@keyframes orbitFast {
+  from { transform: rotate(0deg) translateX(15px) rotate(0deg); }
+  to { transform: rotate(360deg) translateX(15px) rotate(-360deg); }
+}
+
+/* Performance optimizations */
+.gpu-accelerate {
+  @apply will-change-transform;
+  transform: translateZ(0);
+}
+
+/* Canvas and WebGL elements */
+.webgl-canvas {
+  @apply fixed inset-0 -z-10 w-full h-full;
+}
+
+/* Layout utilities enhanced for smooth scrolling */
+.container-fluid {
+  @apply w-full mx-auto px-4 md:px-8 lg:px-16;
+  max-width: 1400px; /* Slightly reduced for more minimal look */
+}
+
+.section-spacing {
+  @apply py-16 md:py-24 lg:py-32; /* Increased spacing for Apple-style sections */
+}
+
+.fullscreen {
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+/* Button with modern hover effect and better visibility */
+.btn-primary {
+  @apply relative inline-block px-6 py-3 overflow-hidden rounded-full text-white font-medium transition-all duration-300;
+  @apply bg-gradient-to-r from-[rgb(var(--color-primary))] to-[rgb(var(--color-secondary))];
+  @apply hover:shadow-lg hover:shadow-[rgb(var(--color-primary))]/25;
+}
+
+.btn-primary::after {
+  @apply absolute inset-0 content-[''] bg-white/20 opacity-0 transition-opacity duration-300;
+  content: '';
+}
+
+.btn-primary:hover::after {
+  @apply opacity-100;
+}
+
+.btn-secondary {
+  @apply relative inline-block px-6 py-3 overflow-hidden rounded-full font-medium transition-all duration-300;
+  @apply border-2 border-[rgb(var(--color-primary))];
+  @apply text-[rgb(var(--color-primary))];
+  @apply hover:bg-[rgb(var(--color-primary))]/5;
+}
+
+/* Hide cursor when custom cursor is active */
+.cursor-none {
+  cursor: none;
+}
+
+/* 3D effect with perspective */
+.perspective-container {
+  @apply relative;
+  perspective: 1000px;
+}
+
+.card-3d {
+  @apply relative transition-all duration-300;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+/* Utility classes for parallax scrolling */
+.parallax-slow {
+  will-change: transform;
+}
+
+.parallax-medium {
+  will-change: transform;
+}
+
+.parallax-fast {
+  will-change: transform;
+}
+
+/* Apple-style scroll containers */
+.apple-scroll-section {
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Content reveal on scroll */
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s var(--apple-ease), transform 0.8s var(--apple-ease);
+}
+
+.reveal-on-scroll.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Horizontal scroll container - improved version */
+.horizontal-scroll-container {
+  position: relative;
+  width: 100%;
+}
+
+/* Fixed positioning for the section during scroll lock */
+.fixed-section {
+  position: sticky;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  z-index: 5;
+}
+
+/* Make content element flex */
+.horizontal-scroll-content {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  will-change: transform;
+}
+
+/* Body class when horizontal scroll is active */
+body.horizontal-scroll-active {
+  overflow: hidden;
+}
+
+body.horizontal-scroll-active * {
+  pointer-events: none;
+}
+
+body.horizontal-scroll-active .horizontal-scroll-content * {
+  pointer-events: auto;
+}
+
+/* Horizontal scroll container with proper scroll locking */
+.horizontal-scroll-container {
+  /* Will be dynamically sized in JS */
+  position: relative;
+  width: 100%;
+  z-index: 1;
+}
+
+/* Apply this class to body when horizontal scroll is active */
+body.horizontal-scroll-active {
+  overflow-y: hidden;
+  height: 100vh;
+}
+
+body.horizontal-scroll-active .horizontal-scroll-container {
+  position: relative;
+  z-index: 50;
+}
+
+/* More explicit positioning for the sticky container to ensure it stays visible */
+.horizontal-scroll-container > div {
+  position: sticky;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  z-index: 40;
+}
+
+/* Text shadow utility classes for better readability */
+.text-shadow-sm {
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.text-shadow-md {
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.text-shadow-lg {
+  text-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+/* Card styling */
+.service-card {
+  @apply bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-all duration-300;
+  @apply border border-gray-100;
+}
+
+/* Testimonial styling */
+.testimonial-card {
+  @apply bg-gray-50 rounded-xl p-6 shadow-sm;
+  @apply border border-gray-100;
+}
+
+/* Feature item styling */
+.feature-item {
+  @apply flex items-start gap-4 p-4;
+}
+
+.feature-icon {
+  @apply text-[rgb(var(--color-primary))] flex-shrink-0;
+}
+
+/* Stats styling */
+.stat-item {
+  @apply flex flex-col items-center text-center p-4;
+}
+
+.stat-number {
+  @apply text-4xl font-bold text-[rgb(var(--color-primary))];
+}
+
+.stat-label {
+  @apply text-sm text-[rgb(var(--text-secondary))] mt-2;
 }
