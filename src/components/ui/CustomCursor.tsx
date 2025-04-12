@@ -9,17 +9,37 @@ export default function CustomCursor() {
   const [visible, setVisible] = useState(false);
   const [hoveringClickable, setHoveringClickable] = useState(false);
   const [cursorText, setCursorText] = useState<string>('');
+  const [isMobile, setIsMobile] = useState(false);
   
-  // Force visible cursor on first render
+  // Check if device is mobile
   useEffect(() => {
-    // Make cursor visible immediately if we have coordinates
-    if (x !== undefined && y !== undefined) {
+    const checkIfMobile = () => {
+      // Use matchMedia to detect touch devices
+      const isTouchDevice = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+      setIsMobile(isTouchDevice);
+    };
+    
+    checkIfMobile();
+    window.addEventListener('resize', checkIfMobile);
+    
+    return () => {
+      window.removeEventListener('resize', checkIfMobile);
+    };
+  }, []);
+  
+  // Force visible cursor on first render (only for non-mobile)
+  useEffect(() => {
+    // Make cursor visible immediately if we have coordinates and not on mobile
+    if (x !== undefined && y !== undefined && !isMobile) {
       setVisible(true);
     }
-  }, [x, y]);
+  }, [x, y, isMobile]);
 
   // Handle cursor visibility and interaction states
   useEffect(() => {
+    // Skip for mobile devices
+    if (isMobile) return;
+    
     // Track interactive elements - fixed type casting for TypeScript
     const handleElementMouseEnter = (e: Event) => {
       const target = e.target as HTMLElement;
@@ -59,18 +79,23 @@ export default function CustomCursor() {
       
       document.body.style.cursor = '';
     };
-  }, []);
+  }, [isMobile]);
 
-  // For debugging - log cursor coordinates
-  useEffect(() => {
-    console.log(`Cursor position: x=${x}, y=${y}, visible=${visible}`);
-  }, [x, y, visible]);
+  // Don't show debug logs in production
+  // useEffect(() => {
+  //   console.log(`Cursor position: x=${x}, y=${y}, visible=${visible}`);
+  // }, [x, y, visible]);
+
+  // Don't render custom cursor for mobile devices
+  if (isMobile) return null;
 
   return (
     <>
       <style jsx global>{`
-        * {
-          cursor: none !important;
+        @media (hover: hover) and (pointer: fine) {
+          * {
+            cursor: none !important;
+          }
         }
       `}</style>
       

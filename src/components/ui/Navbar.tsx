@@ -14,7 +14,6 @@ interface NavItem {
 const navItems: NavItem[] = [
   { name: 'Home', path: '#home' },
   { name: 'Services', path: '#services' },
-  { name: 'Features', path: '#portfolio' }, // Renamed from Portfolio to Features
   { name: 'Our Process', path: '#process' },
   { name: 'Contact', path: '#contact' },
 ];
@@ -110,7 +109,7 @@ export default function Navbar() {
             <div className="flex items-center" data-cursor-hover>
               <div className="text-2xl font-bold tracking-tight">
                 <span className={`${isScrolled ? 'text-[rgb(var(--text-primary))]' : 'text-[rgb(var(--text-primary))]'}`}>
-                  WebCraft
+                  Fludo
                 </span>
                 <span className="text-gradient">.</span>
               </div>
@@ -252,26 +251,35 @@ interface MobileMenuProps {
 }
 
 function MobileMenu({ navItems, isOpen, setIsOpen, activeSection }: MobileMenuProps) {
-  // Prevent background scrolling when menu is open
+  // Prevent background scrolling when menu is open with improved handling
   useEffect(() => {
+    // Store original body style
+    const originalOverflow = window.getComputedStyle(document.body).overflow;
+    const originalPaddingRight = window.getComputedStyle(document.body).paddingRight;
+    
     if (isOpen) {
+      // Get width of scrollbar to prevent layout shift when locking scroll
+      const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+      
+      // Add padding equal to scrollbar width to prevent content jumping
+      document.body.style.paddingRight = `${scrollbarWidth}px`;
       document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'auto';
     }
     
     return () => {
-      document.body.style.overflow = 'auto';
+      // Restore original body style
+      document.body.style.overflow = originalOverflow;
+      document.body.style.paddingRight = originalPaddingRight;
     };
   }, [isOpen]);
   
   return (
     <motion.div
       className="fixed inset-0 z-40 bg-white/95 backdrop-blur-xl"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.3 }}
+      initial={{ opacity: 0, y: -10 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -10 }}
+      transition={{ duration: 0.25 }}
     >
       <div className="flex flex-col items-center justify-center h-full">
         <motion.nav
