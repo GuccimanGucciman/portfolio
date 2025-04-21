@@ -12,10 +12,10 @@ interface NavItem {
 
 // Define the navigation items for a business-focused site
 const navItems: NavItem[] = [
-  { name: 'Home', path: '#home' },
-  { name: 'Services', path: '#services' },
-  { name: 'Our Process', path: '#process' },
-  { name: 'Contact', path: '#contact' },
+  { name: 'Home', path: '/#home' },
+  { name: 'Services', path: '/#services' },
+  { name: 'Our Process', path: '/#process' },
+  { name: 'Contact', path: '/#contact' },
 ];
 
 export default function Navbar() {
@@ -253,23 +253,34 @@ interface MobileMenuProps {
 function MobileMenu({ navItems, isOpen, setIsOpen, activeSection }: MobileMenuProps) {
   // Prevent background scrolling when menu is open with improved handling
   useEffect(() => {
-    // Store original body style
+    if (!isOpen) return;
+    
+    // Store original body style and scroll position
     const originalOverflow = window.getComputedStyle(document.body).overflow;
     const originalPaddingRight = window.getComputedStyle(document.body).paddingRight;
+    const originalPosition = window.getComputedStyle(document.body).position;
+    const scrollY = window.scrollY;
     
-    if (isOpen) {
-      // Get width of scrollbar to prevent layout shift when locking scroll
-      const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
-      
-      // Add padding equal to scrollbar width to prevent content jumping
-      document.body.style.paddingRight = `${scrollbarWidth}px`;
-      document.body.style.overflow = 'hidden';
-    }
+    // Get width of scrollbar to prevent layout shift when locking scroll
+    const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+    
+    // Apply fixed position to body to prevent scrolling without jumping
+    document.body.style.overflow = 'hidden';
+    document.body.style.paddingRight = `${scrollbarWidth}px`;
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${scrollY}px`;
+    document.body.style.width = '100%';
     
     return () => {
       // Restore original body style
       document.body.style.overflow = originalOverflow;
       document.body.style.paddingRight = originalPaddingRight;
+      document.body.style.position = originalPosition;
+      document.body.style.top = '';
+      document.body.style.width = '';
+      
+      // Restore scroll position
+      window.scrollTo(0, scrollY);
     };
   }, [isOpen]);
   

@@ -53,25 +53,6 @@ const websiteServices: WebService[] = [
     image: '/window.svg'
   },
   {
-    id: 'advanced-functionality',
-    title: 'Advanced Functionality',
-    description: 'Extend your marketing website with powerful backend integrations to automate workflows, collect customer information, and enhance your online presence.',
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.431.992a6.759 6.759 0 010 .255c-.007.378.138.75.43.99l1.005.828c.424.35.534.954.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.57 6.57 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.28c-.09.543-.56.941-1.11.941h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.43-.992a6.932 6.932 0 010-.255c.007-.378-.138-.75-.43-.99l-1.004-.828a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.087.22-.128.332-.183.582-.495.644-.869l.214-1.281z" />
-        <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-      </svg>
-    ),
-    features: [
-      'Email marketing integrations',
-      'Basic CRM functionality',
-      'Simple booking and scheduling',
-      'Custom contact forms with automation',
-      'Analytics and visitor tracking'
-    ],
-    image: '/window.svg'
-  },
-  {
     id: 'support',
     title: 'Website Maintenance',
     description: 'Keep your website running smoothly with professional maintenance services, ensuring your marketing site remains secure, up-to-date, and performing at its best.',
@@ -85,7 +66,6 @@ const websiteServices: WebService[] = [
       'Performance optimization',
       'Content updates',
       'Technical support',
-      'Monthly analytics reports'
     ],
     image: '/window.svg'
   },
@@ -117,55 +97,53 @@ export default function Services() {
         </motion.div>
         
         {/* Services Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 mb-20">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-20">
           {websiteServices.map((service, index) => (
             <motion.div 
               key={service.id}
-              className="bg-white rounded-xl overflow-hidden border border-gray-100 shadow-md"
+              className="bg-white rounded-xl overflow-hidden border border-gray-100 shadow-md flex flex-col h-full"
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
               transition={{ duration: 0.7, delay: index * 0.1 }}
             >
-              <div className="flex flex-col md:flex-row h-full">
-                {/* Service icon/image column */}
-                <div className="w-full md:w-1/3 bg-[rgb(var(--color-primary))]/5 p-6 flex flex-col items-center justify-center">
-                  <div className="w-16 h-16 rounded-full bg-white shadow-md flex items-center justify-center mb-4">
-                    <div className="text-[rgb(var(--color-primary))]">
-                      {service.icon}
-                    </div>
+              {/* Service icon/header */}
+              <div className="bg-[rgb(var(--color-primary))]/5 p-4 flex flex-col items-center">
+                <div className="w-14 h-14 rounded-full bg-white shadow-md flex items-center justify-center mb-3">
+                  <div className="text-[rgb(var(--color-primary))]">
+                    {service.icon}
                   </div>
-                  <h3 className="text-xl font-bold text-center text-[rgb(var(--text-primary))]">{service.title}</h3>
                 </div>
+                <h3 className="text-lg font-bold text-center text-[rgb(var(--text-primary))]">{service.title}</h3>
+              </div>
+              
+              {/* Service details */}
+              <div className="p-5 flex-1 flex flex-col">
+                <p className="text-sm text-[rgb(var(--text-secondary))] mb-4">
+                  {service.description}
+                </p>
                 
-                {/* Service details column */}
-                <div className="w-full md:w-2/3 p-6">
-                  <p className="text-[rgb(var(--text-secondary))] mb-4">
-                    {service.description}
-                  </p>
-                  
-                  <h4 className="text-sm font-semibold text-[rgb(var(--text-primary))] mb-3">
-                    What&apos;s Included:
-                  </h4>
-                  
-                  <ul className="space-y-2 mb-6">
-                    {service.features.map((feature, featureIndex) => (
-                      <li key={featureIndex} className="flex items-start">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-[rgb(var(--color-primary))] flex-shrink-0 mr-2 mt-0.5" viewBox="0 0 20 20" fill="currentColor">
-                          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                        </svg>
-                        <span className="text-[rgb(var(--text-secondary))]">{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  
-                  <div className="mt-auto">
-                    <Link href="#contact" className="text-[rgb(var(--color-primary))] font-medium hover:underline inline-flex items-center">
-                      Learn More
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" viewBox="0 0 20 20" fill="currentColor">
-                        <path fillRule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
+                <h4 className="text-xs font-semibold text-[rgb(var(--text-primary))] mb-2">
+                  What&apos;s Included:
+                </h4>
+                
+                <ul className="space-y-1.5 mb-5 flex-1">
+                  {service.features.map((feature, featureIndex) => (
+                    <li key={featureIndex} className="flex items-start">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-[rgb(var(--color-primary))] flex-shrink-0 mr-1.5 mt-0.5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                       </svg>
-                    </Link>
-                  </div>
+                      <span className="text-xs text-[rgb(var(--text-secondary))]">{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+                
+                <div className="mt-auto">
+                  <Link href="#contact" className="text-[rgb(var(--color-primary))] text-sm font-medium hover:underline inline-flex items-center">
+                    Learn More
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5 ml-1" viewBox="0 0 20 20" fill="currentColor">
+                      <path fillRule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
+                    </svg>
+                  </Link>
                 </div>
               </div>
             </motion.div>
@@ -186,9 +164,7 @@ export default function Services() {
           <div className="space-y-6 mt-8">
             <div className="bg-gray-50 rounded-lg p-6">
               <h4 className="font-semibold mb-2 text-[rgb(var(--text-primary))]">How long does it take to build a website?</h4>
-              <p className="text-[rgb(var(--text-secondary))]">
-                Most small business websites take 4-8 weeks from concept to launch, depending on complexity and content readiness. 
-                We&apos;ll provide a detailed timeline during our initial consultation based on your specific needs.
+              <p className="text-[rgb(var(--text-secondary))]">The timeframe largely depends on the scope of the website, we&apos;ll provide a detailed timeline during our initial consultation based on your specific needs.
               </p>
             </div>
             

@@ -39,10 +39,20 @@ export default function Contact() {
     
     setFormStatus('submitting');
     
-    // Simulate API call with timeout
     try {
-      // In a real app, replace this with actual API call
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      // Send form data to our API endpoint
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formState),
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to send message');
+      }
+      
       setFormStatus('success');
       
       // Reset form after success
@@ -201,19 +211,8 @@ export default function Contact() {
                   </svg>
                 }
                 title="Email"
-                value="hello@webdesignagency.com"
-                link="mailto:hello@webdesignagency.com"
-              />
-              
-              <ContactItem 
-                icon={
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M15.05 5A5 5 0 0 1 19 8.95M15.05 1A9 9 0 0 1 23 8.94m-1 7.98v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
-                  </svg>
-                }
-                title="Phone"
-                value="(555) 123-4567"
-                link="tel:+15551234567"
+                value="hello@fludo.se"
+                link="mailto:hello@fludo.se"
               />
               
               <ContactItem 
@@ -223,8 +222,8 @@ export default function Contact() {
                     <circle cx="12" cy="10" r="3"></circle>
                   </svg>
                 }
-                title="Office"
-                value="123 Business Ave, San Francisco, CA"
+                title="Location"
+                value="Gothenburg, Sweden"
               />
             </motion.div>
             
@@ -237,11 +236,11 @@ export default function Contact() {
             >
               <div className="flex items-center mb-4">
                 <div className="w-12 h-12 rounded-full bg-[rgb(var(--color-primary))]/10 flex items-center justify-center text-[rgb(var(--color-primary))]">
-                  MC
+                  L
                 </div>
                 <div className="ml-3">
-                  <p className="font-medium text-[rgb(var(--text-primary))]">Michael Chen</p>
-                  <p className="text-sm text-[rgb(var(--text-secondary))]">Bistro Gourmet</p>
+                  <p className="font-medium text-[rgb(var(--text-primary))]">Eirik</p>
+                  <p className="text-sm text-[rgb(var(--text-secondary))]">Lixy.no</p>
                 </div>
               </div>
               <p className="text-[rgb(var(--text-secondary))] italic">
@@ -258,7 +257,7 @@ export default function Contact() {
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
               transition={{ duration: 0.8, delay: 0.4 }}
             >
-              <h3 className="text-xl font-bold mb-6 text-[rgb(var(--text-primary))]">Request a Quote</h3>
+              <h3 className="text-xl font-bold mb-6 text-[rgb(var(--text-primary))] pb-2">Request a Quote</h3>
               
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -313,28 +312,6 @@ export default function Contact() {
                   />
                   
                   <div className="md:col-span-2">
-                    <label htmlFor="projectType" className="block text-sm font-medium text-[rgb(var(--text-primary))] mb-2">
-                      Project Type
-                    </label>
-                    <select
-                      id="projectType"
-                      name="projectType"
-                      className="w-full rounded-md border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-[rgb(var(--color-primary))] focus:border-transparent"
-                      value={formState.projectType}
-                      onChange={handleInputChange}
-                      disabled={formStatus === 'submitting'}
-                      data-cursor-hover
-                    >
-                      <option value="">Select a project type</option>
-                      <option value="Cleaning Service Website">Cleaning Service Website</option>
-                      <option value="Event/Program Platform">Event/Program Platform</option>
-                      <option value="Booking System">Booking System</option>
-                      <option value="Custom Website">Custom Website</option>
-                      <option value="Support & Maintenance">Support & Maintenance</option>
-                    </select>
-                  </div>
-                  
-                  <div className="md:col-span-2">
                     <AnimatedFormField
                       label="Project Details"
                       name="message"
@@ -350,47 +327,31 @@ export default function Contact() {
                   </div>
                   
                   <div>
-                    <label htmlFor="budget" className="block text-sm font-medium text-[rgb(var(--text-primary))] mb-2">
-                      Budget Range
-                    </label>
-                    <select
-                      id="budget"
+                    <AnimatedFormField
+                      label="Budget"
                       name="budget"
-                      className="w-full rounded-md border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-[rgb(var(--color-primary))] focus:border-transparent"
+                      type="text"
                       value={formState.budget}
                       onChange={handleInputChange}
+                      onFocus={() => setFocusedField('budget')}
+                      onBlur={() => setFocusedField(null)}
+                      isFocused={focusedField === 'budget'}
                       disabled={formStatus === 'submitting'}
-                      data-cursor-hover
-                    >
-                      <option value="">Select budget range</option>
-                      <option value="$1,000 - $5,000">$1,000 - $5,000</option>
-                      <option value="$5,000 - $10,000">$5,000 - $10,000</option>
-                      <option value="$10,000 - $25,000">$10,000 - $25,000</option>
-                      <option value="$25,000+">$25,000+</option>
-                      <option value="Not sure">Not sure</option>
-                    </select>
+                    />
                   </div>
                   
                   <div>
-                    <label htmlFor="timeline" className="block text-sm font-medium text-[rgb(var(--text-primary))] mb-2">
-                      Desired Timeline
-                    </label>
-                    <select
-                      id="timeline"
+                    <AnimatedFormField
+                      label="Desired Timeline"
                       name="timeline"
-                      className="w-full rounded-md border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-[rgb(var(--color-primary))] focus:border-transparent"
+                      type="text"
                       value={formState.timeline}
                       onChange={handleInputChange}
+                      onFocus={() => setFocusedField('timeline')}
+                      onBlur={() => setFocusedField(null)}
+                      isFocused={focusedField === 'timeline'}
                       disabled={formStatus === 'submitting'}
-                      data-cursor-hover
-                    >
-                      <option value="">Select timeline</option>
-                      <option value="Less than 1 month">Less than 1 month</option>
-                      <option value="1-2 months">1-2 months</option>
-                      <option value="3-6 months">3-6 months</option>
-                      <option value="6+ months">6+ months</option>
-                      <option value="Not sure">Not sure</option>
-                    </select>
+                    />
                   </div>
                 </div>
                 
@@ -467,10 +428,6 @@ export default function Contact() {
                     )}
                   </AnimatePresence>
                 </motion.div>
-                
-                <p className="text-xs text-center text-[rgb(var(--text-secondary))] mt-4">
-                  By submitting this form, you agree to our privacy policy and terms of service.
-                </p>
               </form>
             </motion.div>
           </div>

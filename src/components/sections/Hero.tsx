@@ -5,10 +5,14 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { motion, useMotionValue, useSpring, AnimatePresence, } from 'framer-motion';
 import { useMousePosition } from '@/hooks/useMousePosition';
+import MagneticButton from '../ui/MagneticButton';
 
 export default function Hero() {
   const mousePosition = useMousePosition();
   const containerRef = useRef<HTMLElement>(null);
+  
+  // Track when the section is in view
+  const [isInView, setIsInView] = useState(true);
   
   // Mouse-driven parallax effect for hero content
   const [mouseParallax, setMouseParallax] = useState({ x: 0, y: 0 });
@@ -28,12 +32,36 @@ export default function Hero() {
   const springX = useSpring(useMotionValue(0), springConfig);
   const springY = useSpring(useMotionValue(0), springConfig);
   
+  // Set up intersection observer to detect when section is in view
+  useEffect(() => {
+    if (!containerRef.current) return;
+    
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        // Update isInView state when visibility changes
+        setIsInView(entry.isIntersecting);
+        
+        // Reset parallax values when coming into view to prevent text/button overlap
+        if (entry.isIntersecting) {
+          springX.set(0);
+          springY.set(0);
+          // Immediately update mouseParallax state to avoid waiting for mouse movement
+          setMouseParallax({ x: 0, y: 0 });
+        }
+      },
+      { threshold: 0.15 } // Trigger when 15% visible
+    );
+    
+    observer.observe(containerRef.current);
+    return () => observer.disconnect();
+  }, [springX, springY]);
+  
   // Mouse movement effect (reduced intensity)
   useEffect(() => {
     if (!containerRef.current) return;
     
     const handleMouseMove = () => {
-      if (!containerRef.current) return;
+      if (!containerRef.current || !isInView) return;
       
       const rect = containerRef.current.getBoundingClientRect();
       const centerX = rect.left + rect.width / 2;
@@ -64,7 +92,7 @@ export default function Hero() {
       window.removeEventListener('mousemove', handleMouseMove);
       cancelAnimationFrame(animationFrame);
     };
-  }, [mousePosition, springX, springY]);
+  }, [mousePosition, springX, springY, isInView]);
   
   // Text role animation
   useEffect(() => {
@@ -173,7 +201,7 @@ export default function Hero() {
               More than just a pretty design, our sites are strategically crafted to convert visitors into loyal customers.
             </motion.p>
             
-            {/* CTA buttons */}
+            {/* CTA buttons with magnetic effect */}
             <motion.div 
               className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mt-12"
               initial={{ opacity: 0, y: 20 }}
@@ -185,25 +213,25 @@ export default function Hero() {
               }}
             >
               <Link href="#services" passHref>
-                <motion.span
-                  className="btn-primary px-8 py-3"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.98 }}
-                  data-cursor-hover
-                >
-                  Explore Services
-                </motion.span>
+                <MagneticButton buttonType="gradient" strength={25}>
+                  <span className="flex items-center gap-2">
+                    Explore Services
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M4 2 L12 8 L4 14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </span>
+                </MagneticButton>
               </Link>
-              
               <Link href="#contact" passHref>
-                <motion.span
-                  className="btn-secondary px-8 py-3"
+                <motion.div
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.98 }}
                   data-cursor-hover
                 >
-                  Get a Free Quote
-                </motion.span>
+                  <MagneticButton buttonType="outline" strength={20}>
+                    Get a Free Quote
+                  </MagneticButton>
+                </motion.div>
               </Link>
             </motion.div>
             
@@ -229,8 +257,8 @@ export default function Hero() {
                   <span className="text-xs text-[rgb(var(--text-secondary))]">Loading Speed</span>
                 </div>
                 <div className="flex flex-col items-center">
-                  <span className="text-xl font-bold text-[rgb(var(--color-primary))]">24/7</span>
-                  <span className="text-xs text-[rgb(var(--text-secondary))]">Support</span>
+                    <span className="text-xl font-bold text-[rgb(var(--color-primary))]">Efficient</span>
+                    <span className="text-xs text-[rgb(var(--text-secondary))]">Customer Support</span>
                 </div>
               </div>
             </motion.div>
