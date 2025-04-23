@@ -236,7 +236,7 @@ export default function Contact() {
             >
               <div className="flex items-center mb-4">
                 <div className="w-12 h-12 rounded-full bg-[rgb(var(--color-primary))]/10 flex items-center justify-center text-[rgb(var(--color-primary))]">
-                  L
+                  E
                 </div>
                 <div className="ml-3">
                   <p className="font-medium text-[rgb(var(--text-primary))]">Eirik</p>
