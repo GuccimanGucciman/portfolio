@@ -381,12 +381,14 @@ export default function Contact() {
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                       >
-                        <motion.div
-                          className="w-5 h-5 rounded-full border-2 border-t-transparent border-white"
-                          animate={{ rotate: 360 }}
-                          transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                        />
-                        <span className="ml-2">Submitting...</span>
+                        <div className="flex flex-row items-center justify-center">
+                          <motion.div
+                            className="w-5 h-5 rounded-full border-2 border-t-transparent border-white"
+                            animate={{ rotate: 360 }}
+                            transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                          />
+                          <span className="ml-2">Submitting...</span>
+                        </div>
                       </motion.div>
                     )}
                     
