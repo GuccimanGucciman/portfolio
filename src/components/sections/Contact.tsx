@@ -8,12 +8,8 @@ export default function Contact() {
   const [formState, setFormState] = useState({
     name: '',
     email: '',
-    company: '',
     phone: '',
-    projectType: '',
     message: '',
-    budget: '',
-    timeline: '',
   });
   
   const [formStatus, setFormStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
@@ -60,12 +56,8 @@ export default function Contact() {
         setFormState({
           name: '',
           email: '',
-          company: '',
           phone: '',
-          projectType: '',
           message: '',
-          budget: '',
-          timeline: '',
         });
         setFormStatus('idle');
       }, 3000);
@@ -287,33 +279,23 @@ export default function Contact() {
                     disabled={formStatus === 'submitting'}
                   />
                   
-                  <AnimatedFormField
-                    label="Company Name"
-                    name="company"
-                    type="text"
-                    value={formState.company}
-                    onChange={handleInputChange}
-                    onFocus={() => setFocusedField('company')}
-                    onBlur={() => setFocusedField(null)}
-                    isFocused={focusedField === 'company'}
-                    disabled={formStatus === 'submitting'}
-                  />
-                  
-                  <AnimatedFormField
-                    label="Phone Number"
-                    name="phone"
-                    type="tel"
-                    value={formState.phone}
-                    onChange={handleInputChange}
-                    onFocus={() => setFocusedField('phone')}
-                    onBlur={() => setFocusedField(null)}
-                    isFocused={focusedField === 'phone'}
-                    disabled={formStatus === 'submitting'}
-                  />
+                  <div className="md:col-span-2">
+                    <AnimatedFormField
+                      label="Phone Number (Optional)"
+                      name="phone"
+                      type="tel"
+                      value={formState.phone}
+                      onChange={handleInputChange}
+                      onFocus={() => setFocusedField('phone')}
+                      onBlur={() => setFocusedField(null)}
+                      isFocused={focusedField === 'phone'}
+                      disabled={formStatus === 'submitting'}
+                    />
+                  </div>
                   
                   <div className="md:col-span-2">
                     <AnimatedFormField
-                      label="Project Details"
+                      label="Tell us about your project"
                       name="message"
                       isTextarea={true}
                       required
@@ -322,34 +304,6 @@ export default function Contact() {
                       onFocus={() => setFocusedField('message')}
                       onBlur={() => setFocusedField(null)}
                       isFocused={focusedField === 'message'}
-                      disabled={formStatus === 'submitting'}
-                    />
-                  </div>
-                  
-                  <div>
-                    <AnimatedFormField
-                      label="Budget"
-                      name="budget"
-                      type="text"
-                      value={formState.budget}
-                      onChange={handleInputChange}
-                      onFocus={() => setFocusedField('budget')}
-                      onBlur={() => setFocusedField(null)}
-                      isFocused={focusedField === 'budget'}
-                      disabled={formStatus === 'submitting'}
-                    />
-                  </div>
-                  
-                  <div>
-                    <AnimatedFormField
-                      label="Desired Timeline"
-                      name="timeline"
-                      type="text"
-                      value={formState.timeline}
-                      onChange={handleInputChange}
-                      onFocus={() => setFocusedField('timeline')}
-                      onBlur={() => setFocusedField(null)}
-                      isFocused={focusedField === 'timeline'}
                       disabled={formStatus === 'submitting'}
                     />
                   </div>
